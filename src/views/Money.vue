@@ -1,16 +1,9 @@
 <template>
-    <div>
-MO
-<Nav></Nav>
-    </div>
+  <Layout>
+    <p>money</p>
+  </Layout>
 </template>
 
 <script lang="ts">
-    export default{
-        
-    }
+export default {};
 </script>
-
-<style scoped>
-
-</style>

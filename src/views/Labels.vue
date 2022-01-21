@@ -1,18 +1,11 @@
 <template>
-    <div>
-la
-<Nav></Nav>
-    </div>
+  <Layout>
+    <p>la</p>
+  </Layout>
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
+import Vue from "vue";
 
-    export default{
-        
-    }
+export default {};
 </script>
-
-<style lang="sass" scoped>
-
-</style>
