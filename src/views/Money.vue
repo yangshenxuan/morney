@@ -1,6 +1,7 @@
 <template>
     <div>
 MO
+<Nav></Nav>
     </div>
 </template>
 

@@ -1,6 +1,7 @@
 <template>
     <div>
 sta
+<Nav></Nav>
     </div>
 </template>
 

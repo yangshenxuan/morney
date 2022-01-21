@@ -1,6 +1,7 @@
 <template>
     <div>
 la
+<Nav></Nav>
     </div>
 </template>
 
