@@ -1,34 +1,85 @@
 <template>
   <div class="pad">
-    <div class="screen">100123</div>
-    <ul class="numbers">
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
+    <div class="screen">{{ n }}</div>
+    <div class="numbers">
+      <button @click="stringAdd">1</button>
+      <button @click="stringAdd">2</button>
+      <button @click="stringAdd">3</button>
       <button class="gray">+</button>
-      <button class="gray">删除</button>
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
+      <button class="gray" @click="remove">退格</button>
+      <button @click="stringAdd">4</button>
+      <button @click="stringAdd">5</button>
+      <button @click="stringAdd">6</button>
       <button class="gray">-</button>
-      <button class="gray">清空</button>
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
+      <button class="gray" @click="clear">清空</button>
+      <button @click="stringAdd">7</button>
+      <button @click="stringAdd">8</button>
+      <button @click="stringAdd">9</button>
       <button class="gray">×</button>
       <button class="OK">OK</button>
-      <button>.</button>
-      <button>0</button>
-      <button>%</button>
+      <button @click="stringAdd">.</button>
+      <button @click="stringAdd">0</button>
+      <button @click="percent">%</button>
       <button class="gray">÷</button>
-    </ul>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import { Component } from "vue-property-decorator";
 
-export default Vue.extend({});
+@Component
+export default class Pad extends Vue {
+  n: string = "0";
+  stringAdd(event: MouseEvent) {
+    const button = event.target as HTMLButtonElement;
+    const input = button.textContent!;
+    if (this.n.length === 13) {
+      return;
+    }
+    if (this.n === "0") {
+      //一开始的状态this.n必为0
+      if ("0123456789".indexOf(input) >= 0) {
+        this.n = input;
+      } else {
+        this.n += input;
+      }
+      return;
+    }
+    if (this.n.indexOf(".") >= 0 && input === ".") {
+      return;
+    }
+    this.n += input;
+  }
+  // add() {
+  //   const addNumber = parseInt(this.n);
+  //   console.log(addNumber);
+  //   this.n = "0";
+  //   console.log(this.n);
+  // }
+  remove() {
+    if (this.n.length === 1) {
+      this.n = "0";
+    } else {
+      this.n = this.n.slice(0, -1);
+    }
+  }
+  clear() {
+    this.n = "0";
+  }
+  percent() {
+    const b: number = parseFloat(this.n);
+    console.log(b);
+    const c: number = b * 0.01;
+    console.log(c);
+    this.n = c.toString();
+    console.log(this.n);
+    if (this.n.length === 6) {
+      return;
+    }
+  }
+}
 </script>
 
 <style lang = 'scss' scoped>
