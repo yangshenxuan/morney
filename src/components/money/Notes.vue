@@ -1,15 +1,30 @@
 <template>
   <div class="notes">
     <div class="tips">备注</div>
-    <input type="text" placeholder="点击添加备注" />
+    <input
+      type="text"
+      :tips="tips"
+      @input="output"
+      placeholder="点击添加备注"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import { Component } from "vue-property-decorator";
 
-export default Vue.extend({});
+@Component
+export default class Notes extends Vue {
+  tips = "";
+  output(event: KeyboardEvent) {
+    const input = event.target as HTMLInputElement;
+    this.tips = input.value;
+    console.log(this.tips);
+  }
+}
 </script>
+
 
 <style lang='scss' scoped>
 .notes {

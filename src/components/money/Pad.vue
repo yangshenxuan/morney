@@ -70,14 +70,12 @@ export default class Pad extends Vue {
   }
   percent() {
     const b: number = parseFloat(this.n);
-    console.log(b);
     const c: number = b * 0.01;
-    console.log(c);
     this.n = c.toString();
-    console.log(this.n);
-    if (this.n.length === 6) {
-      return;
-    }
+    // console.log(this.n); 字符串长度太大bug
+    // if (this.n.length === 6) {
+    //   return;
+    // }
   }
 }
 </script>
