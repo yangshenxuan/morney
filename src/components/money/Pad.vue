@@ -16,7 +16,7 @@
       <button @click="stringAdd">8</button>
       <button @click="stringAdd">9</button>
       <button class="gray">×</button>
-      <button class="OK">OK</button>
+      <button class="OK" @click="OK">OK</button>
       <button @click="stringAdd">.</button>
       <button @click="stringAdd">0</button>
       <button @click="percent">%</button>
@@ -27,14 +27,17 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Component, Prop, Watch } from "vue-property-decorator";
 
 @Component
 export default class Pad extends Vue {
+  selectedButton: string[] = [];
   n: string = "0";
   stringAdd(event: MouseEvent) {
     const button = event.target as HTMLButtonElement;
     const input = button.textContent!;
+    // this.selectedButton.push(input);
+    // console.log(input);
     if (this.n.length === 13) {
       return;
     }
@@ -77,6 +80,13 @@ export default class Pad extends Vue {
     //   return;
     // }
   }
+  OK(value: string) {
+    if (this.n === "0") {
+      return;
+    } else {
+      this.$emit("pass", this.n);
+    }
+  }
 }
 </script>
 
@@ -114,6 +124,9 @@ export default class Pad extends Vue {
         float: right;
         background: #2dcf5d;
       }
+      /* &.selected {
+        background: #000;
+      } */
     }
   }
 }

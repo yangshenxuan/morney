@@ -1,20 +1,22 @@
-import new from '../../store/index';
-
 <template>
   <div class="select">
-    <span :class="status === 1 && 'selected'" @click="click(1)">支出</span>
-    <span :class="status === 2 && 'selected'" @click="click(2)">收入</span>
+    <span :class="status === '-' && 'selected'" @click="click('-')">支出</span>
+    <span :class="status === '+' && 'selected'" @click="click('+')">收入</span>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Component, Watch } from "vue-property-decorator";
 @Component
 export default class Status extends Vue {
-  status = 1;
-  click(status: number) {
+  status = "-";
+  click(status: string) {
     this.status = status;
+  }
+  @Watch("status")
+  updateStatus(status: string) {
+    this.$emit("pass", this.status);
   }
 }
 </script>
