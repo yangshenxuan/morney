@@ -85,7 +85,9 @@ export default class Pad extends Vue {
       return;
     } else {
       this.$emit("pass", this.n);
+      this.$emit("submit", this.n);
     }
+    this.n = "0";
   }
 }
 </script>

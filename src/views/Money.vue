@@ -4,8 +4,7 @@ import new from '../store/index';
     <Tags :dataSource.sync="tags" @pass="updateTags" />
     <Notes @pass="updateNotes" />
     <Select @pass="updateSelect" />
-    <Pad @pass="updatePad" />
-    {{ record }}
+    <Pad @pass="updatePad" @submit="saveRecord" />
   </Layout>
 </template>
 
@@ -16,21 +15,18 @@ import Select from "@/components/money/Select.vue";
 import Pad from "@/components/money/Pad.vue";
 import Vue from "vue";
 import { Component, Watch } from "vue-property-decorator";
+import model from "@/model";
 
-type Record = {
-  tags: string[];
-  notes: string;
-  select: string;
-  pad: string;
-};
+const recordList: RecordItem[] = model.fetch();
 
 @Component({
   components: { Tags, Notes, Select, Pad },
 })
 export default class Money extends Vue {
   tags = ["衣", "食", "住", "行"];
+  recordList: RecordItem[] = recordList;
 
-  record: Record = {
+  record: RecordItem = {
     tags: [],
     notes: "",
     select: "-",
@@ -48,6 +44,15 @@ export default class Money extends Vue {
   }
   updatePad(value: string) {
     this.record.pad = value;
+  }
+  saveRecord() {
+    const cord: RecordItem = JSON.parse(JSON.stringify(this.record));
+    cord.time = new Date();
+    this.recordList.push(cord);
+  }
+  @Watch("recordList")
+  onRecordListChange() {
+    model.save(this.recordList);
   }
 }
 </script>
