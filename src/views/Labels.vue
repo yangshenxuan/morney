@@ -1,7 +1,7 @@
 <template>
   <Layout>
-    <ol class="labels">
-      <li>
+    <div class="labels">
+      <!-- <li>
         <div class="left">
           <svg-icon icon-class="clothes" class="icon" /><span>衣</span>
         </div>
@@ -24,14 +24,19 @@
           <svg-icon icon-class="go" class="icon" /><span>行</span>
         </div>
         <svg-icon icon-class="right" class="right" />
-      </li>
-      <li v-for="tag in tags" :key="tag">
+      </li> -->
+      <router-link
+        class="tag"
+        v-for="tag in tags"
+        :key="tag.id"
+        :to="`/labels/edit/${tag.id}`"
+      >
         <div class="left">
-          <svg-icon icon-class="flag" class="icon" /><span>{{ tag }}</span>
+          <svg-icon icon-class="flag" class="icon" /><span>{{ tag.name }}</span>
         </div>
         <svg-icon icon-class="right" class="right" />
-      </li>
-    </ol>
+      </router-link>
+    </div>
     <div class="createTag-wrapper">
       <button class="createTag" @click="createTag">新建标签</button>
     </div>
@@ -46,7 +51,6 @@ import { Component } from "vue-property-decorator";
 tagListModel.fetch();
 @Component
 export default class Labels extends Vue {
-  y: number = 0;
   tags = tagListModel.data;
   createTag() {
     const name = window.prompt("请输入标签名");
@@ -69,7 +73,7 @@ export default class Labels extends Vue {
   background: #fafafa;
   font-size: 16px;
   padding-left: 15px;
-  > li {
+  > .tag {
     min-height: 50px;
     border-bottom: 1px solid #d1d1d4;
     display: flex;
