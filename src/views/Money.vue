@@ -5,6 +5,7 @@ import new from '../store/index';
     <Notes @pass="updateNotes" />
     <Select @pass="updateSelect" />
     <Pad @pass="updatePad" @submit="saveRecord" />
+    <!-- {{ recordList }} -->
   </Layout>
 </template>
 
@@ -15,15 +16,18 @@ import Select from "@/components/money/Select.vue";
 import Pad from "@/components/money/Pad.vue";
 import Vue from "vue";
 import { Component, Watch } from "vue-property-decorator";
-import model from "@/model";
+import recordListModel from "@/models/recordListModel";
+import tagListModel from "@/models/tagListModel";
 
-const recordList: RecordItem[] = model.fetch();
+const recordList = recordListModel.fetch();
+const tagList = tagListModel.fetch();
 
 @Component({
   components: { Tags, Notes, Select, Pad },
 })
 export default class Money extends Vue {
-  tags = ["衣", "食", "住", "行"];
+  tags = tagList;
+
   recordList: RecordItem[] = recordList;
 
   record: RecordItem = {
@@ -52,7 +56,7 @@ export default class Money extends Vue {
   }
   @Watch("recordList")
   onRecordListChange() {
-    model.save(this.recordList);
+    recordListModel.save(this.recordList);
   }
 }
 </script>
