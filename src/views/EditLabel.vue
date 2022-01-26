@@ -1,6 +1,10 @@
 <template>
   <Layout>
-    <div>编辑标签</div>
+    <div class="left">
+      <svg-icon icon-class="left" />
+
+      <span>编辑标签</span>
+    </div>
   </Layout>
 </template>
 
