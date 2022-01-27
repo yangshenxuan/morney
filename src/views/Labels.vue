@@ -1,5 +1,8 @@
 <template>
   <Layout>
+    <div class="top">
+      <span>新建标签</span>
+    </div>
     <div class="labels">
       <!-- <li>
         <div class="left">
@@ -72,7 +75,16 @@ export default class Labels extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.top {
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #2dcf5d;
+  font-size: 20px;
+}
 .labels {
+  margin-top: 8px;
   background: #fafafa;
   font-size: 16px;
   padding-left: 15px;

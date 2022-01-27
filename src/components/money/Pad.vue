@@ -82,6 +82,7 @@ export default class Pad extends Vue {
   }
   OK(value: string) {
     if (this.n === "0") {
+      window.alert("金额不能为空，请重新输入");
       return;
     } else {
       this.$emit("pass", this.n);

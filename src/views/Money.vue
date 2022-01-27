@@ -1,11 +1,10 @@
-import new from '../store/index';
 <template>
   <Layout class-prefix="layout">
     <Tags :dataSource.sync="tags" @pass="updateTags" />
     <Notes @pass="updateNotes" filename="备注" placeholder="请输入备注" />
     <Select @pass="updateSelect" />
     <Pad @pass="updatePad" @submit="saveRecord" />
-    <!-- {{ recordList }} -->
+    {{ recordList }}
   </Layout>
 </template>
 

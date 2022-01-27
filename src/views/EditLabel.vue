@@ -1,11 +1,11 @@
 <template>
   <Layout>
-    <div class="top">
+    <router-link class="top" to="/Labels">
       <svg-icon icon-class="left" class="left" />
       <span>编辑标签</span>
-    </div>
+    </router-link>
     <div class="form-wrapper">
-      <Notes filename="标签名" placeholder="请输入标签名" />
+      <Notes :value="tag.name" filename="标签名" placeholder="请输入标签名" />
     </div>
     <div class="button-wrapper">
       <Button class="delete">删除标签</Button>
@@ -24,12 +24,13 @@ import { Component } from "vue-property-decorator";
   components: { Notes, Button },
 })
 export default class EditLabel extends Vue {
+  tag?: { id: string; name: string } = undefined;
   created() {
     const id = this.$route.params.id;
     const tags = tagListModel.data;
     const tag = tags.filter((t) => t.id === id)[0];
     if (tag) {
-      console.log(tag);
+      this.tag = tag;
     } else {
       this.$router.replace("/404");
     }
@@ -62,7 +63,7 @@ export default class EditLabel extends Vue {
   padding: 16px;
   margin-top: 44-16px;
   > .delete {
-    background: #767676;
+    background: #830000;
     color: white;
     border-radius: 4px;
     border: none;
