@@ -38,18 +38,21 @@
       </router-link>
     </div>
     <div class="createTag-wrapper">
-      <button class="createTag" @click="createTag">新建标签</button>
+      <Button class="createTag" @click="createTag">新建标签</Button>
     </div>
   </Layout>
 </template>
 
 <script lang="ts">
+import Button from "@/components/Button.vue";
 import tagListModel from "@/models/tagListModel";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 
 tagListModel.fetch();
-@Component
+@Component({
+  components: { Button },
+})
 export default class Labels extends Vue {
   tags = tagListModel.data;
   createTag() {

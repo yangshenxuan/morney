@@ -30,8 +30,6 @@ export default {
   > .item {
     display: flex;
     flex-direction: column;
-    text-decoration: none;
-    color: black;
     padding: 5px 0;
     width: 33.33333%;
     align-items: center;
