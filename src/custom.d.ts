@@ -4,8 +4,4 @@ type RecordItem = {
     select: string;
     pad: string;
     time?: Date;
-};
-type Tag = {
-    id: string,
-    name: string
 }

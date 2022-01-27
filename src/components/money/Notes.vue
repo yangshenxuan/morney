@@ -5,7 +5,7 @@
       type="text"
       :value="value"
       @input="onValueChange($event.target.value)"
-      :placeholder="this.placeholder"
+      :placeholder="placeholder"
     />
   </div>
 </template>
@@ -20,7 +20,6 @@ export default class Notes extends Vue {
   @Prop() placeholder?: string;
   @Prop({ default: "" }) readonly value!: string;
 
-  @Watch("value")
   onValueChange(value: string) {
     this.$emit("pass", value);
   }

@@ -49,9 +49,7 @@ export default class Money extends Vue {
     this.record.pad = value;
   }
   saveRecord() {
-    const cord: RecordItem = JSON.parse(JSON.stringify(this.record));
-    cord.time = new Date();
-    this.recordList.push(cord);
+    recordListModel.create(this.record);
   }
   @Watch("recordList")
   onRecordListChange() {

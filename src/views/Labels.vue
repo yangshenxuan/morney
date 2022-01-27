@@ -94,19 +94,20 @@ export default class Labels extends Vue {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
     > .right {
       width: 23px;
       height: 26px;
       margin-right: 15px;
     }
     > .left {
-      width: 46px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       > .icon {
         width: 23px;
         height: 26px;
+        margin-right: 10px;
       }
     }
   }

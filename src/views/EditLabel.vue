@@ -5,10 +5,15 @@
       <span>编辑标签</span>
     </router-link>
     <div class="form-wrapper">
-      <Notes :value="tag.name" filename="标签名" placeholder="请输入标签名" />
+      <Notes
+        :value="tag.name"
+        @pass="updateTag"
+        filename="标签名"
+        placeholder="请输入标签名"
+      />
     </div>
     <div class="button-wrapper">
-      <Button class="delete">删除标签</Button>
+      <Button class="delete" @click="removeTag">删除标签</Button>
     </div>
   </Layout>
 </template>
@@ -27,6 +32,7 @@ export default class EditLabel extends Vue {
   tag?: { id: string; name: string } = undefined;
   created() {
     const id = this.$route.params.id;
+    tagListModel.fetch();
     const tags = tagListModel.data;
     const tag = tags.filter((t) => t.id === id)[0];
     if (tag) {
@@ -35,10 +41,24 @@ export default class EditLabel extends Vue {
       this.$router.replace("/404");
     }
   }
+  updateTag(name: string) {
+    if (this.tag) {
+      tagListModel.update(this.tag.id, name);
+    }
+  }
+  removeTag() {
+    if (this.tag) {
+      tagListModel.remove(this.tag.id);
+    }
+    this.$router.push("/Labels");
+  }
 }
 </script>
 
 <style lang='scss' scoped>
+.selected {
+  color: #2dcf5d;
+}
 .top {
   height: 62px;
   display: flex;
