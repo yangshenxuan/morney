@@ -1,16 +1,18 @@
 <template>
   <div class="notes">
-    <div class="tips">备注</div>
-    <input type="text" v-model="tips" placeholder="点击添加备注" />
+    <div class="tips">{{ this.filename }}</div>
+    <input type="text" v-model="tips" :placeholder="this.placeholder" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { Component, Watch } from "vue-property-decorator";
+import { Component, Prop, Watch } from "vue-property-decorator";
 
 @Component
 export default class Notes extends Vue {
+  @Prop({ required: true }) filename!: string;
+  @Prop() placeholder?: string;
   tips = "";
   @Watch("tips")
   tipsChange(tips: string) {
