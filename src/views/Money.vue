@@ -14,10 +14,7 @@ import Notes from "@/components/money/Notes.vue";
 import Select from "@/components/money/Select.vue";
 import Pad from "@/components/money/Pad.vue";
 import Vue from "vue";
-import { Component, Watch } from "vue-property-decorator";
-import recordListModel from "@/models/recordListModel";
-
-const recordList = recordListModel.fetch();
+import { Component } from "vue-property-decorator";
 
 @Component({
   components: { Tags, Notes, Select, Pad },
@@ -25,7 +22,7 @@ const recordList = recordListModel.fetch();
 export default class Money extends Vue {
   tags = window.tagList;
 
-  recordList: RecordItem[] = recordList;
+  recordList = window.recordList;
 
   record: RecordItem = {
     tags: [],
@@ -47,11 +44,7 @@ export default class Money extends Vue {
     this.record.pad = value;
   }
   saveRecord() {
-    recordListModel.create(this.record);
-  }
-  @Watch("recordList")
-  onRecordListChange() {
-    recordListModel.save(this.recordList);
+    window.createRecord(this.record);
   }
 }
 </script>

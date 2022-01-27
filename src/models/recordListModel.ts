@@ -7,13 +7,14 @@ const recordListModel = {
     const record2: RecordItem = clone(record);
     record2.time = new Date();
     this.data.push(record2);
+    this.save()
   },
   fetch() {
     this.data = JSON.parse(window.localStorage.getItem(localStorageKey) || "[]") as RecordItem[];
     return this.data
   },
-  save(data: RecordItem[]) {
-    window.localStorage.setItem(localStorageKey, JSON.stringify(data));
+  save() {
+    window.localStorage.setItem(localStorageKey, JSON.stringify(this.data));
   },
 };
 export default recordListModel;
