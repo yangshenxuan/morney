@@ -21,7 +21,6 @@
 <script lang="ts">
 import Notes from "@/components/money/Notes.vue";
 import Button from "@/components/Button.vue";
-import tagListModel from "@/models/tagListModel";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 
@@ -31,24 +30,19 @@ import { Component } from "vue-property-decorator";
 export default class EditLabel extends Vue {
   tag?: { id: string; name: string } = undefined;
   created() {
-    const id = this.$route.params.id;
-    tagListModel.fetch();
-    const tags = tagListModel.data;
-    const tag = tags.filter((t) => t.id === id)[0];
-    if (tag) {
-      this.tag = tag;
-    } else {
+    this.tag = window.findTag(this.$route.params.id);
+    if (!this.tag) {
       this.$router.replace("/404");
     }
   }
   updateTag(name: string) {
     if (this.tag) {
-      tagListModel.update(this.tag.id, name);
+      window.updateTag(this.tag.id, name);
     }
   }
   removeTag() {
     if (this.tag) {
-      tagListModel.remove(this.tag.id);
+      window.removeTag(this.tag.id);
     }
     this.$router.push("/Labels");
   }

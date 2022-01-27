@@ -3,12 +3,12 @@
     <button class="new" @click="create">新增标签</button>
     <ul>
       <li
-        :class="{ selected: selectedTags.indexOf(tags) >= 0 }"
-        @click="toggle(tags)"
-        v-for="tags in dataSource"
-        :key="tags.id"
+        v-for="tag in dataSource"
+        :key="tag.id"
+        :class="{ selected: selectedTags.indexOf(tag) >= 0 }"
+        @click="toggle(tag)"
       >
-        {{ tags.name }}
+        {{ tag.name }}
       </li>
     </ul>
   </div>
@@ -34,7 +34,9 @@ export default class Tags extends Vue {
   }
   create() {
     const name = window.prompt("请输入标签名");
-    if (name && this.dataSource) {
+    if (name === "") {
+      window.alert("标签名不能为空");
+    } else if (this.dataSource) {
       this.$emit("update:dataSource", [...this.dataSource, name]);
     }
   }

@@ -16,16 +16,14 @@ import Pad from "@/components/money/Pad.vue";
 import Vue from "vue";
 import { Component, Watch } from "vue-property-decorator";
 import recordListModel from "@/models/recordListModel";
-import tagListModel from "@/models/tagListModel";
 
 const recordList = recordListModel.fetch();
-const tagList = tagListModel.fetch();
 
 @Component({
   components: { Tags, Notes, Select, Pad },
 })
 export default class Money extends Vue {
-  tags = tagList;
+  tags = window.tagList;
 
   recordList: RecordItem[] = recordList;
 
