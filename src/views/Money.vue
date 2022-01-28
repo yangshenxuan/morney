@@ -15,14 +15,15 @@ import Select from "@/components/money/Select.vue";
 import Pad from "@/components/money/Pad.vue";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
+import store from "@/store/index2";
 
 @Component({
   components: { Tags, Notes, Select, Pad },
 })
 export default class Money extends Vue {
-  tags = window.tagList;
+  tags = store.tagList;
 
-  recordList = window.recordList;
+  recordList = store.recordList;
 
   record: RecordItem = {
     tags: [],
@@ -44,7 +45,7 @@ export default class Money extends Vue {
     this.record.pad = value;
   }
   saveRecord() {
-    window.createRecord(this.record);
+    store.createRecord(this.record);
   }
 }
 </script>
