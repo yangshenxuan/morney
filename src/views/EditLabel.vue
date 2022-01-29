@@ -6,14 +6,14 @@
     </router-link>
     <div class="form-wrapper">
       <Notes
-        :value="tag.name"
+        :value="currentTag.name"
         @pass="updateTag"
         filename="标签名"
         placeholder="请输入标签名"
       />
     </div>
     <div class="button-wrapper">
-      <Button class="delete" @click="removeTag">删除标签</Button>
+      <Button class="delete" @click="remove">删除标签</Button>
     </div>
   </Layout>
 </template>
@@ -23,29 +23,31 @@ import Notes from "@/components/money/Notes.vue";
 import Button from "@/components/Button.vue";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import store from "@/store/index2";
-
 @Component({
   components: { Notes, Button },
 })
 export default class EditLabel extends Vue {
-  tag?: { id: string; name: string } = undefined;
+  get currentTag() {
+    return this.$store.state.currentTag;
+  }
+
   created() {
-    this.tag = store.findTag(this.$route.params.id);
-    if (!this.tag) {
+    const id = this.$route.params.id;
+    this.$store.commit("fetchTags");
+    this.$store.commit("setCurrentTag", id);
+    if (!this.currentTag) {
       this.$router.replace("/404");
     }
   }
   updateTag(name: string) {
-    if (this.tag) {
-      store.updateTag(this.tag.id, name);
+    if (this.currentTag) {
+      this.$store.commit("updateTag", { id: this.currentTag.id, name });
     }
   }
-  removeTag() {
-    if (this.tag) {
-      store.removeTag(this.tag.id);
+  remove() {
+    if (this.currentTag) {
+      this.$store.commit("removeTag", this.currentTag.id);
     }
-    this.$router.push("/Labels");
   }
 }
 </script>

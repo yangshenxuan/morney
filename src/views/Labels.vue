@@ -48,7 +48,6 @@
 
 <script lang="ts">
 import Button from "@/components/Button.vue";
-import store from "@/store/index2";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 
@@ -56,12 +55,18 @@ import { Component } from "vue-property-decorator";
   components: { Button },
 })
 export default class Labels extends Vue {
-  tags = store.tagList;
+  get tags() {
+    return this.$store.state.tagList;
+  }
+  beforeCreate() {
+    this.$store.commit("fetchTags");
+  }
   createTag() {
     const name = window.prompt("请输入标签名");
-    if (name) {
-      store.createTag(name);
+    if (!name) {
+      return window.alert("标签名不能为空");
     }
+    this.$store.commit("createTag", name);
   }
 }
 </script>

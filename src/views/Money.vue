@@ -1,6 +1,6 @@
 <template>
   <Layout class-prefix="layout">
-    <Tags :dataSource.sync="tags" @pass="updateTags" />
+    <Tags />
     <Notes @pass="updateNotes" filename="备注" placeholder="请输入备注" />
     <Select @pass="updateSelect" />
     <Pad @pass="updatePad" @submit="saveRecord" />
@@ -15,16 +15,14 @@ import Select from "@/components/money/Select.vue";
 import Pad from "@/components/money/Pad.vue";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import store from "@/store/index2";
 
 @Component({
   components: { Tags, Notes, Select, Pad },
 })
 export default class Money extends Vue {
-  tags = store.tagList;
-
-  recordList = store.recordList;
-
+  get recordList() {
+    return this.$store.state.recordList;
+  }
   record: RecordItem = {
     tags: [],
     notes: "",
@@ -32,9 +30,10 @@ export default class Money extends Vue {
     pad: "0",
   };
 
-  updateTags(value: string[]) {
-    this.record.tags = value;
+  created() {
+    this.$store.commit("fetchRecord");
   }
+
   updateNotes(value: string) {
     this.record.notes = value;
   }
@@ -45,7 +44,7 @@ export default class Money extends Vue {
     this.record.pad = value;
   }
   saveRecord() {
-    store.createRecord(this.record);
+    this.$store.commit("createRecord", this.record);
   }
 }
 </script>
