@@ -7,7 +7,7 @@
     <div class="form-wrapper">
       <Notes
         :value="currentTag.name"
-        @pass="updateTag"
+        @update:value="updateTag"
         filename="标签名"
         placeholder="请输入标签名"
       />

@@ -1,7 +1,7 @@
 type RecordItem = {
     tags: string[];
     notes: string;
-    select: string;
+    type: string;
     pad: string;
     time?: Date;
 }

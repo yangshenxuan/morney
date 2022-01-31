@@ -1,47 +1,50 @@
 <template>
   <Layout class-prefix="layout">
-    <Tags />
+    <Tags @pass="updateTags" />
     <Notes @pass="updateNotes" filename="备注" placeholder="请输入备注" />
-    <Select @pass="updateSelect" />
-    <Pad @pass="updatePad" @submit="saveRecord" />
+    <Tabs
+      class-prefix="type"
+      :data-source="typeList"
+      :value.sync="record.type"
+    />
+    <Pad :value.sync="record.pad" @submit="saveRecord" />
     {{ recordList }}
   </Layout>
 </template>
 
 <script lang='ts'>
 import Tags from "@/components/money/Tags.vue";
+import Tabs from "@/components/Tabs.vue";
 import Notes from "@/components/money/Notes.vue";
-import Select from "@/components/money/Select.vue";
 import Pad from "@/components/money/Pad.vue";
+import typeList from "@/constants/typeList";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 
 @Component({
-  components: { Tags, Notes, Select, Pad },
+  components: { Tags, Notes, Tabs, Pad },
 })
 export default class Money extends Vue {
+  typeList = typeList;
+  type = "-";
   get recordList() {
     return this.$store.state.recordList;
   }
   record: RecordItem = {
     tags: [],
     notes: "",
-    select: "-",
+    type: "-",
     pad: "0",
   };
 
   created() {
     this.$store.commit("fetchRecords");
   }
-
+  updateTags(value: string[]) {
+    this.record.tags = value;
+  }
   updateNotes(value: string) {
     this.record.notes = value;
-  }
-  updateSelect(value: string) {
-    this.record.select = value;
-  }
-  updatePad(value: string) {
-    this.record.pad = value;
   }
   saveRecord() {
     this.$store.commit("createRecord", this.record);
