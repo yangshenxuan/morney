@@ -1,6 +1,6 @@
 <template>
   <Layout class-prefix="layout">
-    <Tags @pass="updateTags" />
+    <Tags />
     <Notes @pass="updateNotes" filename="备注" placeholder="请输入备注" />
     <Tabs
       class-prefix="type"
@@ -8,7 +8,6 @@
       :value.sync="record.type"
     />
     <Pad :value.sync="record.pad" @submit="saveRecord" />
-    {{ recordList }}
   </Layout>
 </template>
 
@@ -20,6 +19,11 @@ import Pad from "@/components/money/Pad.vue";
 import typeList from "@/constants/typeList";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
+
+type Tag = {
+  id: string;
+  name: string;
+};
 
 @Component({
   components: { Tags, Notes, Tabs, Pad },
@@ -40,7 +44,7 @@ export default class Money extends Vue {
   created() {
     this.$store.commit("fetchRecords");
   }
-  updateTags(value: string[]) {
+  updateTags(value: Tag[]) {
     this.record.tags = value;
   }
   updateNotes(value: string) {

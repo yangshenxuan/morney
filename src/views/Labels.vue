@@ -96,6 +96,7 @@ export default class Labels extends mixins(TagHelper) {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      
       > .icon {
         width: 23px;
         height: 26px;
