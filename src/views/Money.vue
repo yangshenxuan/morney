@@ -1,7 +1,11 @@
 <template>
   <Layout class-prefix="layout">
-    <Tags />
-    <Notes @pass="updateNotes" filename="备注" placeholder="请输入备注" />
+    <Tags @update:value="record.tags = $event" />
+    <Notes
+      filename="备注"
+      :value.sync="record.notes"
+      placeholder="请输入备注"
+    />
     <Tabs
       class-prefix="type"
       :data-source="typeList"
@@ -44,14 +48,19 @@ export default class Money extends Vue {
   created() {
     this.$store.commit("fetchRecords");
   }
-  updateTags(value: Tag[]) {
-    this.record.tags = value;
-  }
   updateNotes(value: string) {
     this.record.notes = value;
   }
   saveRecord() {
+    if (!this.record.tags || this.record.tags.length === 0) {
+      window.alert("请至少选择一个标签");
+      return;
+    }
     this.$store.commit("createRecord", this.record);
+    if (this.$store.state.createRecordError === null) {
+      window.alert("已保存");
+      this.record.notes = "";
+    }
   }
 }
 </script>

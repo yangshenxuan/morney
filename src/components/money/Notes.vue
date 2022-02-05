@@ -21,7 +21,7 @@ export default class Notes extends Vue {
   @Prop({ default: "" }) readonly value!: string;
 
   onValueChange(value: string) {
-    this.$emit("pass", value);
+    this.$emit("update:value", value);
   }
 }
 </script>

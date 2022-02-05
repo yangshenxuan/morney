@@ -5,22 +5,18 @@
       <button @click="stringAdd">1</button>
       <button @click="stringAdd">2</button>
       <button @click="stringAdd">3</button>
-      <button class="gray">+</button>
       <button class="gray" @click="remove">退格</button>
       <button @click="stringAdd">4</button>
       <button @click="stringAdd">5</button>
       <button @click="stringAdd">6</button>
-      <button class="gray">-</button>
       <button class="gray" @click="clear">清空</button>
       <button @click="stringAdd">7</button>
       <button @click="stringAdd">8</button>
       <button @click="stringAdd">9</button>
-      <button class="gray">×</button>
       <button class="OK" @click="OK">OK</button>
       <button @click="stringAdd">.</button>
       <button @click="stringAdd">0</button>
       <button @click="percent">%</button>
-      <button class="gray">÷</button>
     </div>
   </div>
 </template>
@@ -55,12 +51,6 @@ export default class Pad extends Vue {
     }
     this.n += input;
   }
-  // add() {
-  //   const addNumber = parseInt(this.n);
-  //   console.log(addNumber);
-  //   this.n = "0";
-  //   console.log(this.n);
-  // }
   remove() {
     if (this.n.length === 1) {
       this.n = "0";
@@ -75,10 +65,6 @@ export default class Pad extends Vue {
     const b: number = parseFloat(this.n);
     const c: number = b * 0.01;
     this.n = c.toString();
-    // console.log(this.n); 字符串长度太大bug
-    // if (this.n.length === 6) {
-    //   return;
-    // }
   }
   OK(value: string) {
     if (this.n === "0") {
@@ -114,7 +100,7 @@ export default class Pad extends Vue {
     > button {
       border: 1px solid #b3b3b3;
       color: white;
-      width: 20%;
+      width: 25%;
       height: 64px;
       float: left;
       background: #5c5c5c;
@@ -127,9 +113,6 @@ export default class Pad extends Vue {
         float: right;
         background: #2dcf5d;
       }
-      /* &.selected {
-        background: #000;
-      } */
     }
   }
 }

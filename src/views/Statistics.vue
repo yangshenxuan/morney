@@ -2,22 +2,22 @@
   <div>
     <Layout>
       <Tabs class-prefix="type" :data-source="typeList" :value.sync="type" />
-      <div>
-        <ol>
-          <li v-for="group in groupedList" :key="group.title">
-            <h3 class="title">{{ beautify(group.title) }}</h3>
-            <ol>
-              <li v-for="item in group.items" :key="item.id" class="record">
-                <div>
-                  <span>{{ tagString(item.tags) }}</span>
-                  <span class="notes">{{ item.notes }}</span>
-                </div>
-                <span>￥{{ item.pad }}</span>
-              </li>
-            </ol>
-          </li>
-        </ol>
-      </div>
+
+      <ol v-if="groupedList.length > 0">
+        <li v-for="group in groupedList" :key="group.title">
+          <h3 class="title">{{ beautify(group.title) }}</h3>
+          <ol>
+            <li v-for="item in group.items" :key="item.id" class="record">
+              <div>
+                <span>{{ tagString(item.tags) }}</span>
+                <span class="notes">{{ item.notes }}</span>
+              </div>
+              <span>￥{{ item.pad }}</span>
+            </li>
+          </ol>
+        </li>
+      </ol>
+      <div v-else class="noResult">目前没有相关记录</div>
     </Layout>
   </div>
 </template>
@@ -65,17 +65,16 @@ export default class Statistics extends Vue {
 
   get groupedList() {
     const { recordList } = this;
-    if (recordList.length === 0) {
-      return [];
-    }
-    type HashTableValue = { title: string; items: RecordItem[] };
 
-    // const hasTable: { title: string; item: RecordItem[] }[];
     const newList = clone(recordList)
       .filter((r) => r.type === this.type)
       .sort(
         (a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
       );
+    if (newList.length === 0) {
+      return [];
+    }
+    type Result = { title: string; total?: number; items: RecordItem };
     const result = [
       {
         title: dayjs(newList[0].createdAt).format("YYYY-MM-DD"),
@@ -102,7 +101,7 @@ export default class Statistics extends Vue {
     this.$store.commit("fetchRecords");
   }
   tagString(tags: Tag[]) {
-    return tags.length === 0 ? "无" : tags.join(",");
+    return tags.length === 0 ? "无" : tags.map((t) => t.name).join("，");
   }
   intervalList = intervalList;
   typeList = typeList;
@@ -112,6 +111,10 @@ export default class Statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.noResult {
+  padding: 16px;
+  text-align: center;
+}
 ::v-deep {
   .type-item {
     background: #c4c4c4;
