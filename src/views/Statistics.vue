@@ -4,7 +4,7 @@
       <Tabs class-prefix="type" :data-source="typeList" :value.sync="type" />
 
       <ol v-if="groupedList.length > 0">
-        <li v-for="group in groupedList" :key="group.title">
+        <li v-for="(group, index) in groupedList" :key="index">
           <h3 class="title">{{ beautify(group.title) }}</h3>
           <ol>
             <li v-for="item in group.items" :key="item.id" class="record">
@@ -74,14 +74,14 @@ export default class Statistics extends Vue {
     if (newList.length === 0) {
       return [];
     }
-    type Result = { title: string; total?: number; items: RecordItem };
-    const result = [
+    type Result = { title: string; total?: number; items: RecordItem[] }[];
+    const result: Result = [
       {
         title: dayjs(newList[0].createdAt).format("YYYY-MM-DD"),
         items: [newList[0]],
       },
     ];
-    for (let i = 0; i < newList.length; i++) {
+    for (let i = 1; i < newList.length; i++) {
       const current = newList[i];
       const last = result[result.length - 1];
       if (dayjs(last.title).isSame(dayjs(current.createdAt), "day")) {
@@ -144,3 +144,4 @@ export default class Statistics extends Vue {
   margin: 0 auto 0 15px;
 }
 </style>
+

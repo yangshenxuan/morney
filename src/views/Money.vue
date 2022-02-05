@@ -34,7 +34,6 @@ type Tag = {
 })
 export default class Money extends Vue {
   typeList = typeList;
-  type = "-";
   get recordList() {
     return this.$store.state.recordList;
   }
@@ -42,7 +41,7 @@ export default class Money extends Vue {
     tags: [],
     notes: "",
     type: "-",
-    pad: "0",
+    pad: 0,
   };
 
   created() {

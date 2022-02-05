@@ -15,6 +15,19 @@ const store = new Vuex.Store({
     currentTag: undefined
   } as RootState,
   mutations: {
+    fetchRecords(state) {
+      state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
+    },
+    createRecord(state, record: RecordItem) {
+      const record2 = clone(record);
+      record2.createdAt = new Date().toISOString();
+      state.recordList.push(record2);
+      store.commit('saveRecords');
+    },
+    saveRecords(state) {
+      window.localStorage.setItem('recordList',
+        JSON.stringify(state.recordList));
+    },
     setCurrentTag(state, id: string) {
       state.currentTag = state.tagList.filter(t => t.id === id)[0];
     },
@@ -48,19 +61,6 @@ const store = new Vuex.Store({
         window.alert('删除失败');
       }
 
-    },
-    fetchRecords(state) {
-      state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
-    },
-    createRecord(state, record: RecordItem) {
-      const record2 = clone(record);
-      record2.createdAt = new Date().toISOString();
-      state.recordList.push(record2);
-      store.commit('saveRecords');
-    },
-    saveRecords(state) {
-      window.localStorage.setItem('recordList',
-        JSON.stringify(state.recordList));
     },
     fetchTags(state) {
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
