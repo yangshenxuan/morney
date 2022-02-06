@@ -22,6 +22,7 @@
 </template>
 
 <script lang="ts">
+import router from "@/router";
 import Vue from "vue";
 import { Component, Prop, Watch } from "vue-property-decorator";
 
@@ -75,6 +76,7 @@ export default class Pad extends Vue {
       this.$emit("submit", this.n);
     }
     this.n = "0";
+    this.$router.replace("/statistics");
   }
 }
 </script>

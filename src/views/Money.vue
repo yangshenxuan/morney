@@ -24,11 +24,6 @@ import typeList from "@/constants/typeList";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 
-type Tag = {
-  id: string;
-  name: string;
-};
-
 @Component({
   components: { Tags, Notes, Tabs, Pad },
 })
