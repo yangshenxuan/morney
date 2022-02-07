@@ -25,5 +25,4 @@ type TagListModel = {
     save: () => void
     update: (id: string, name: string) => 'success' | 'duplicated' | 'notfound'
     remove: (id: string) => boolean
-
 }

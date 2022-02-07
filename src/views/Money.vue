@@ -2,10 +2,19 @@
   <Layout class-prefix="layout">
     <Tags @update:value="record.tags = $event" />
     <Notes
-      filename="备注"
+      fileName="备注"
       :value.sync="record.notes"
       placeholder="请输入备注"
     />
+    <div class="createdAt">
+      {{ record.createdAt }}
+      <Notes
+        fileName="日期"
+        type="date"
+        :value.sync="record.createdAt"
+        placeholder="选择日期"
+      />
+    </div>
     <Tabs
       class-prefix="type"
       :data-source="typeList"
@@ -37,6 +46,7 @@ export default class Money extends Vue {
     notes: "",
     type: "-",
     pad: 0,
+    createdAt: new Date().toISOString(),
   };
 
   created() {
