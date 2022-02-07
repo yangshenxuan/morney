@@ -2,7 +2,9 @@
   <div>
     <Layout>
       <Tabs class-prefix="type" :data-source="typeList" :value.sync="type" />
-
+      <div class="chart-Wrapper" ref="chartWrapper">
+        <v-chart class="chart" :option="option" />
+      </div>
       <ol v-if="groupedList.length > 0">
         <li v-for="(group, index) in groupedList" :key="index">
           <h3 class="title">{{ beautify(group.title) }}</h3>
@@ -29,7 +31,23 @@ import intervalList from "@/constants/intervalList";
 import typeList from "@/constants/typeList";
 import dayjs from "dayjs";
 import clone from "@/lib/clone";
-
+import "echarts/lib/component/dataZoom";
+import { use } from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { LineChart } from "echarts/charts";
+import {
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+} from "echarts/components";
+import VChart, { THEME_KEY } from "vue-echarts";
+use([
+  CanvasRenderer,
+  LineChart,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+]);
 type RootState = {
   recordList: RecordItem[];
   tagList: Tag[];
@@ -40,9 +58,13 @@ type Tag = {
   name: string;
 };
 @Component({
-  components: { Tabs },
+  components: { Tabs, VChart },
 })
 export default class Statistics extends Vue {
+  mounted() {
+    const div = this.$refs.chartWrapper as HTMLDivElement;
+    div.scrollLeft = div.scrollWidth;
+  }
   beautify(string: string) {
     const now = dayjs();
     const day = dayjs(string);
@@ -58,7 +80,53 @@ export default class Statistics extends Vue {
       return day.format("YYYY年MM月D日");
     }
   }
-
+  get option() {
+    return {
+      grid: {
+        left: 0,
+        right: 0,
+        top: 0,
+      },
+      xAxis: {
+        type: "category",
+        data: [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+        ],
+        axisTick: { show: false },
+      },
+      yAxis: {
+        type: "value",
+        show: false,
+      },
+      series: [
+        {
+          data: [
+            150, 230, 224, 218, 135, 147, 260, 150, 230, 224, 218, 135, 147,
+            260, 150, 230, 224, 218, 135, 147, 260,
+          ],
+          type: "line",
+          symbolSize: 15,
+          color: "#2dcf5d",
+        },
+      ],
+      tooltip: { show: true },
+    };
+  }
   get recordList() {
     return (this.$store.state as RootState).recordList;
   }
@@ -142,6 +210,13 @@ export default class Statistics extends Vue {
 }
 .notes {
   margin: 0 auto 0 15px;
+}
+.chart {
+  height: 40vh;
+  width: 400%;
+  &-Wrapper {
+    overflow: auto;
+  }
 }
 </style>
 

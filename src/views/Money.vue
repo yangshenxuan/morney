@@ -7,7 +7,6 @@
       placeholder="请输入备注"
     />
     <div class="createdAt">
-      {{ record.createdAt }}
       <Notes
         fileName="日期"
         type="date"
