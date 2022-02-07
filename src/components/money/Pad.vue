@@ -76,7 +76,6 @@ export default class Pad extends Vue {
       this.$emit("submit", this.n);
     }
     this.n = "0";
-    this.$router.replace("/statistics");
   }
 }
 </script>

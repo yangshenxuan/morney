@@ -63,6 +63,7 @@ export default class Money extends Vue {
     if (this.$store.state.createRecordError === null) {
       window.alert("已保存");
       this.record.notes = "";
+      this.$router.replace("/statistics");
     }
   }
 }
